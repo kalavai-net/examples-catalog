@@ -20,7 +20,7 @@ streamlit run chatbot_app/app.py
 
 ## Vibe coding
 
-The project has been entirely generated using a coding model from CoGenAI (**Qwen2.5 Coder 32B**) alongside the [VS extension for Roo Code](https://github.com/qpd-v/Roo-Code?tab=readme-ov-file#installation). Follow along our video tutorial for more information.
+The project has been entirely generated using a coding model from CoGenAI (**Qwen2.5 Coder 32B**) alongside the [VS extension for Roo Code](https://github.com/qpd-v/Roo-Code?tab=readme-ov-file#installation). Follow along [our video tutorial](https://youtu.be/6zHSo7oeCDQ) for more information.
 
 
 ## Prompts
