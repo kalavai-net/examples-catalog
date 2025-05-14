@@ -1,0 +1,6 @@
+TTS
+sounddevice
+numpy
+openai
+litserve
+chainlit
