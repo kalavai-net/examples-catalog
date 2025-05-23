@@ -1,0 +1,51 @@
+import streamlit as st
+import asyncio
+from rag_agent.workflow import run_workflow, generate_index
+
+# Initialize session state variables
+if 'history' not in st.session_state:
+    st.session_state.history = []
+if 'index' not in st.session_state:
+    st.session_state.index = None
+
+# Title of the chatbot
+st.title("RAG Agent Assistant")
+
+# Sidebar for indexing documents
+with st.sidebar:
+    st.header("Document Indexing")
+    folder = st.text_input("Enter folder path:", "./data")
+    index_button = st.button("Generate Index")
+    
+    if index_button and folder:
+        st.session_state.index = generate_index(folder=folder)
+        st.success("Index generated successfully!")
+
+# Input field for the user to type their question
+question = st.chat_input("Ask your question:")
+
+# Language selection dropdown
+language = st.selectbox("Select your preferred language:", ["English", "Spanish"])
+
+# Button to submit the question
+# submit_button = st.button("Submit")  # No longer needed
+
+# Function to handle the chat submission
+async def handle_chat_submission():
+    index = st.session_state.index
+    # if you want user history, use:
+    #st.session_state.history.append({"role": "user", "content": question})
+    st.session_state.history = [{"role": "user", "content": question}]
+
+    response = await run_workflow(index=index, question=question, language=language)
+    
+    # Append user message and bot response to the chat history
+    st.session_state.history.append({"role": "assistant", "content": response})
+
+# Execute the chat submission when the button is clicked
+if question and st.session_state.index:
+    asyncio.run(handle_chat_submission())
+
+# Display the chat history
+for entry in st.session_state.history:
+    st.chat_message(entry["role"]).markdown(entry["content"])
