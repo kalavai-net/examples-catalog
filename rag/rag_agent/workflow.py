@@ -1,5 +1,4 @@
 import asyncio
-import requests
 
 from llama_index.core.workflow import (
     Event,
@@ -9,43 +8,12 @@ from llama_index.core.workflow import (
     step,
     Context
 )
-
-from llama_index.llms.openai_like import OpenAILike
-from llama_index.embeddings.openai_like import OpenAILikeEmbedding
 from llama_index.core.schema import NodeWithScore
-from llama_index.core import SimpleDirectoryReader, VectorStoreIndex, Settings
 
-API_BASE_URL = "https://api.cogenai.kalavai.net/v1"
-API_KEY = "<your CoGen AI key>"
-LLM_MODEL = "qwen-qwen2-5-7b-instruct-awq"
-EMBEDDING_MODEL = "baai-bge-large-en-v1-5"
-
-def chat_request(messages):
-    response = requests.post(
-        f"{API_BASE_URL}/chat/completions",
-        headers={"Authorization": f"Bearer {API_KEY}"},
-        json={
-            "model":  LLM_MODEL,
-            "messages": messages
-        }
-    )
-    output = response.json()["choices"][0]["message"]["content"]
-    return output
-
-def generate_index(folder):
-    documents = SimpleDirectoryReader(folder).load_data()
-    Settings.chunk_size = 512
-    Settings.chunk_overlap = 50
-    index = VectorStoreIndex.from_documents(
-        documents=documents,
-        embed_model=OpenAILikeEmbedding(
-            model_name="baai-bge-large-en-v1-5",
-            api_base=API_BASE_URL,
-            api_key=API_KEY,
-            embed_batch_size=10
-        )
-    )
-    return index
+from rag_agent.utils import (
+    chat_request,
+    generate_index
+)
 
 
 class QuestionTranslatedEvent(Event):
@@ -125,7 +93,6 @@ class AgentFlow(Workflow):
             ]
         )
         return StopEvent(result=answer)
-
 
 
 async def run_workflow(index, question, language):
