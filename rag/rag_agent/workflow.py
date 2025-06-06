@@ -1,3 +1,13 @@
+"""
+This file contains the Agent's workflow as a step by step list of actions.
+
+Each action is defined as a method in the AgentWorkflow class.
+You can expand it by adding or modifying the steps.
+
+For more info, check Llama index documentation: 
+https://docs.llamaindex.ai/en/stable/module_guides/workflow/
+"""
+
 import asyncio
 
 from llama_index.core.workflow import (
