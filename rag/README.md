@@ -47,6 +47,22 @@ This will make your agent available via your browser by visiting http://localhos
 
 ## Prompts
 
-> @/rag_agent/workflow.py given the current agent workflow implementation, create a front end chatbot UI with streamlit (using chat_message for better UX) where users can ask questions to the agent. Use the run_workflow as endpoint for the chat
+Bad prompt:
 
-> let's improve the indexing of documents. Instead of doing it every time there's a question, let's move it to the sidebar where users can do it once, specifying the folder and clicking a button
+```
+build a chatbot
+```
+
+Good prompt:
+
+```
+@/rag_agent/workflow.py given the current agent workflow implementation, create a front end chatbot UI with streamlit (using chat_message for better UX) where users can ask questions to the agent. Use the run_workflow as endpoint for the chat
+```
+
+Best prompt:
+
+```
+In the current project I have an implementation of an RAG agent (in @/rag_agent/workflow.py) and now I want to build a chatbot application that can handle multilanguage queries. The agent should take a set of documents (in a user specified folder) for indexing. With the indexing done, users should be able to interface with the agent workflow via a chatbot UI. Please use python as language, and build the UI interface with streamlit (using the chat_message function). There should be a separation of concerns between the backend (workflow and utils) and the frontend (the new chat UI). Make sure the front end submits the user query to the agent via the run_workflow function at @/rag_agent/workflow.py.
+
+```
+

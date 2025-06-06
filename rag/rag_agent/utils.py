@@ -35,7 +35,8 @@ def generate_index(folder):
             model_name=EMBEDDING_MODEL,
             api_base=API_BASE_URL,
             api_key=API_KEY,
-            embed_batch_size=10
+            embed_batch_size=100,
+            max_retries=100
         )
     )
     return index
