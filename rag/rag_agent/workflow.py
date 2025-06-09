@@ -69,7 +69,7 @@ class AgentFlow(Workflow):
             print("Index is empty, load some documents before querying!")
             return None
 
-        retriever = index.as_retriever(similarity_top_k=3)
+        retriever = index.as_retriever(similarity_top_k=5)
         nodes = await retriever.aretrieve(query)
         print(f"[retriever]: retrieved {len(nodes)} nodes.")
         return RetrieverEvent(nodes=nodes)
